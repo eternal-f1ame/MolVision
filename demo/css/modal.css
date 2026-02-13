@@ -4,6 +4,7 @@
   inset: 0;
   z-index: 100;
   background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   display: none;
   align-items: center;
@@ -18,10 +19,9 @@
 .modal {
   background: var(--sf);
   border: 1px solid var(--bd);
-  border-radius: 18px;
-  width: 90%;
-  max-width: 560px;
-  max-height: 80vh;
+  border-radius: 1.125rem;
+  width: min(92vw, 35rem);
+  max-height: min(85vh, 48rem);
   overflow: hidden;
   transform: translateY(20px);
   transition: transform 0.3s;
@@ -30,7 +30,7 @@
   transform: translateY(0);
 }
 .modal-head {
-  padding: 20px 24px;
+  padding: clamp(0.875rem, 2vw, 1.25rem) clamp(1rem, 2.8vw, 1.5rem);
   border-bottom: 1px solid var(--bd);
   display: flex;
   justify-content: space-between;
@@ -60,9 +60,10 @@
   color: var(--rd);
 }
 .modal-body {
-  padding: 16px 24px 24px;
+  padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 2.8vw, 1.5rem)
+    clamp(1rem, 2.8vw, 1.5rem);
   overflow-y: auto;
-  max-height: 60vh;
+  max-height: min(65vh, 34rem);
 }
 .modal-subtitle {
   font-size: 0.82rem;
@@ -72,8 +73,8 @@
 .mol-opt {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 14px 16px;
+  gap: clamp(0.625rem, 1.6vw, 1rem);
+  padding: clamp(0.75rem, 1.6vw, 0.875rem) clamp(0.875rem, 1.8vw, 1rem);
   margin-bottom: 8px;
   background: var(--sf2);
   border: 1px solid var(--bd);
@@ -91,8 +92,8 @@
   background: rgba(110, 231, 183, 0.06);
 }
 .mol-opt .mo-icon {
-  width: 48px;
-  height: 48px;
+  width: clamp(2.5rem, 4.5vw, 3rem);
+  height: clamp(2.5rem, 4.5vw, 3rem);
   border-radius: 10px;
   background: var(--sf);
   display: flex;
@@ -113,7 +114,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 320px;
+  max-width: min(100%, 20rem);
 }
 .mol-opt .mo-mw {
   font-size: 0.72rem;

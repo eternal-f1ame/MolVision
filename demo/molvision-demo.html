@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MolVision</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/molvision-demo.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+
+    <header>
+      <div class="ctr">
+        <div class="badge">NeurIPS 2025 Datasets &amp; Benchmarks</div>
+        <h1>Mol<span>Vision</span></h1>
+        <p class="sub">
+          Predicting molecular properties by showing a Vision-Language Model
+          what a molecule <em>looks like</em> — not just its text formula.
+        </p>
+      </div>
+    </header>
+
+    <section class="ctr idea an">
+      <div>
+        <div class="sl">The Core Idea</div>
+        <h2>Why show molecules to AI?</h2>
+        <p class="sd" style="margin-bottom: 20px">
+          Chemists don't just read formulas — they look at molecular diagrams to
+          understand structure. MolVision gives AI the same ability by combining
+          molecular images with text descriptions, using Vision-Language Models
+          to predict properties like toxicity, solubility, and bioactivity.
+        </p>
+        <p class="sd">
+          Traditional approaches use text-only SMILES strings which can be
+          ambiguous — two identical molecules can have different encodings.
+          Visual structure captures what text misses.
+        </p>
+      </div>
+      <div class="iv">
+        <div class="cr">
+          <div
+            class="ci"
+            style="background: rgba(248, 113, 113, 0.1); color: var(--rd)"
+          >
+            &#10007;
+          </div>
+          <div>
+            <div class="lb">Text-Only (prior work)</div>
+            <div class="vl">SMILES &#8594; LLM &#8594; Prediction</div>
+          </div>
+        </div>
+        <div class="cr">
+          <div
+            class="ci"
+            style="background: rgba(110, 231, 183, 0.1); color: var(--ac)"
+          >
+            &#10003;
+          </div>
+          <div>
+            <div class="lb">MolVision (this work)</div>
+            <div class="vl">Image + Text &#8594; VLM &#8594; Prediction</div>
+          </div>
+        </div>
+        <div class="cr">
+          <div
+            class="ci"
+            style="background: rgba(96, 165, 250, 0.1); color: var(--bl)"
+          >
+            &#8593;
+          </div>
+          <div>
+            <div class="lb">Key Insight</div>
+            <div class="vl">Visual + text fusion boosts larger molecules</div>
+          </div>
+        </div>
+        <div class="cr">
+          <div
+            class="ci"
+            style="background: rgba(251, 191, 36, 0.1); color: var(--or)"
+          >
+            &#9889;
+          </div>
+          <div>
+            <div class="lb">Fine-Tuning</div>
+            <div class="vl">LoRA + adapted vision encoder = best results</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ws an">
+      <div class="ctr">
+        <div class="sh">
+          <div class="sl">How It Works</div>
+          <h2>The MolVision Pipeline</h2>
+          <p class="sd">
+            From raw molecule to property prediction in four steps.
+          </p>
+        </div>
+        <div class="pl">
+          <div class="ps">
+            <div class="pc">
+              <div class="pn">01</div>
+              <div
+                class="pi"
+                style="background: rgba(96, 165, 250, 0.1); color: var(--bl)"
+              >
+                &#129514;
+              </div>
+              <div class="pt">Molecule Input</div>
+              <div class="pp">
+                Skeletal image via RDKit + SMILES/SELFIES text
+              </div>
+            </div>
+            <div class="pa">&#8594;</div>
+          </div>
+          <div class="ps">
+            <div class="pc">
+              <div class="pn">02</div>
+              <div
+                class="pi"
+                style="background: rgba(167, 139, 250, 0.1); color: var(--pu)"
+              >
+                &#128065;
+              </div>
+              <div class="pt">Vision Encoder</div>
+              <div class="pp">
+                Image encoded into visual features by ViT backbone
+              </div>
+            </div>
+            <div class="pa">&#8594;</div>
+          </div>
+          <div class="ps">
+            <div class="pc">
+              <div class="pn">03</div>
+              <div
+                class="pi"
+                style="background: rgba(110, 231, 183, 0.1); color: var(--ac)"
+              >
+                &#128279;
+              </div>
+              <div class="pt">Multimodal Fusion</div>
+              <div class="pp">
+                Visual features fused with text prompt inside VLM decoder
+              </div>
+            </div>
+            <div class="pa">&#8594;</div>
+          </div>
+          <div class="ps">
+            <div class="pc">
+              <div class="pn">04</div>
+              <div
+                class="pi"
+                style="background: rgba(251, 191, 36, 0.1); color: var(--or)"
+              >
+                &#128202;
+              </div>
+              <div class="pt">Property Prediction</div>
+              <div class="pp">
+                Classification, regression, or molecular description output
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO -->
+    <section class="ds an">
+      <div class="ctr">
+        <div class="sh">
+          <div class="sl">Interactive Demo</div>
+          <h2>See It In Action</h2>
+          <p class="sd">
+            Pick a task, click the input to choose a molecule, and watch the
+            prediction flow.
+          </p>
+        </div>
+        <div class="ttabs" id="tabs"></div>
+        <div class="tdb" id="tdesc"></div>
+        <div class="df">
+          <!-- INPUT -->
+          <div class="dp">
+            <div class="dh">
+              <div class="d dg"></div>
+              Input
+            </div>
+            <div class="db">
+              <div class="mc" id="mcv"></div>
+              <div class="ir">
+                <div class="il">Name</div>
+                <div class="ival w" id="mname"></div>
+              </div>
+              <div class="ir">
+                <div class="il">SMILES</div>
+                <div class="ival" id="msmi"></div>
+              </div>
+              <div class="ir">
+                <div class="il">Mol. Weight</div>
+                <div class="ival w" id="mmw"></div>
+              </div>
+              <button class="inp-btn" onclick="openModal()">
+                &#9662; Choose a different molecule
+              </button>
+            </div>
+          </div>
+          <!-- PROCESSING -->
+          <div class="dp">
+            <div class="dh">
+              <div class="d dbl"></div>
+              VLM Processing
+            </div>
+            <div class="db">
+              <div class="pfl">
+                <div class="pbb" id="s1">
+                  <div class="pbl" style="color: var(--bl)">Vision Encoder</div>
+                  <div class="pbt">Image &#8594; Features</div>
+                  <div class="pbd">
+                    ViT encodes skeletal diagram into spatial tokens — bonds,
+                    rings, functional groups
+                  </div>
+                </div>
+                <div class="parr">&#8595;</div>
+                <div class="pbb" id="s2">
+                  <div class="pbl" style="color: var(--pu)">
+                    Prompt + Context
+                  </div>
+                  <div class="pbt">Task Instruction</div>
+                  <div class="ptx" id="ptxt"></div>
+                </div>
+                <div class="parr">&#8595;</div>
+                <div class="pbb" id="s3">
+                  <div class="pbl" style="color: var(--ac)">
+                    Multimodal Decoder
+                  </div>
+                  <div class="pbt">Fuse &amp; Reason</div>
+                  <div class="pbd">
+                    VLM jointly attends to visual and text tokens
+                  </div>
+                </div>
+                <div class="parr">&#8595;</div>
+                <div class="pbb" id="s4">
+                  <div class="pbl" style="color: var(--or)">Generation</div>
+                  <div class="pbt" id="gtit"></div>
+                  <div class="pbd" id="gdsc"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- OUTPUT -->
+          <div class="dp">
+            <div class="dh">
+              <div class="d dor"></div>
+              Prediction
+            </div>
+            <div class="db" id="outp"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modal">
+      <div class="modal">
+        <div class="modal-head">
+          <h3 id="modal-title">Select Molecule</h3>
+          <button class="modal-close" onclick="closeModal()">&#10005;</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-subtitle" id="modal-sub">
+            Choose a molecule from the lookup table:
+          </div>
+          <div id="modal-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BENCHMARK -->
+    <section class="bs an">
+      <div class="ctr">
+        <div class="sh">
+          <div class="sl">Benchmark Results</div>
+          <h2>VLM Performance Comparison</h2>
+          <p class="sd">Key results across 9 VLMs and 10 datasets.</p>
+        </div>
+        <div class="bw">
+          <table class="btb">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Type</th>
+                <th>BACE-V Acc &#8593;</th>
+                <th>BBBP-V Acc &#8593;</th>
+                <th>ESOL MAE &#8595;</th>
+                <th>FreeSolv MAE &#8595;</th>
+                <th>Best Setting</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mn">GPT-4o</td>
+                <td><span class="typ cl">Closed</span></td>
+                <td class="bst">0.73</td>
+                <td class="bst">0.73</td>
+                <td>1.82</td>
+                <td>2.10</td>
+                <td>Few-shot (k=4)</td>
+              </tr>
+              <tr>
+                <td class="mn">GPT-4V</td>
+                <td><span class="typ cl">Closed</span></td>
+                <td>0.71</td>
+                <td>0.71</td>
+                <td>1.95</td>
+                <td>2.34</td>
+                <td>Few-shot (k=2)</td>
+              </tr>
+              <tr>
+                <td class="mn">Janus-Pro 7B</td>
+                <td><span class="typ op">Open</span></td>
+                <td>0.69</td>
+                <td>0.68</td>
+                <td class="bst">1.45</td>
+                <td class="bst">1.72</td>
+                <td>FT + LoRA</td>
+              </tr>
+              <tr>
+                <td class="mn">BLIP-2</td>
+                <td><span class="typ op">Open</span></td>
+                <td>0.66</td>
+                <td>0.66</td>
+                <td>1.68</td>
+                <td>2.05</td>
+                <td>FT + LoRA</td>
+              </tr>
+              <tr>
+                <td class="mn">LLaVA 1.5</td>
+                <td><span class="typ op">Open</span></td>
+                <td>0.65</td>
+                <td>0.65</td>
+                <td>1.72</td>
+                <td>2.18</td>
+                <td>Fine-tuned</td>
+              </tr>
+              <tr>
+                <td class="mn">CogVLM</td>
+                <td><span class="typ op">Open</span></td>
+                <td>0.63</td>
+                <td>0.64</td>
+                <td>1.89</td>
+                <td>2.41</td>
+                <td>FT + LoRA</td>
+              </tr>
+              <tr>
+                <td class="mn">Qwen-VL</td>
+                <td><span class="typ op">Open</span></td>
+                <td>0.62</td>
+                <td>0.63</td>
+                <td>1.91</td>
+                <td>2.50</td>
+                <td>Fine-tuned</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p
+          style="
+            color: var(--dm);
+            font-size: 0.78rem;
+            margin-top: 12px;
+            text-align: center;
+          "
+        >
+          Representative results. Fine-tuned open models with adapted vision
+          encoders close the gap with proprietary models.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="ctr">
+        <p>
+          MolVision: Molecular Property Prediction with Vision Language Models
+        </p>
+        <p style="margin-top: 6px">
+          Deepan Adak, Aaditya Samant, Shruti Vyas &mdash;
+          <a href="https://arxiv.org/abs/2507.03283" target="_blank"
+            >arXiv:2507.03283</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <script src="logic/data.js"></script>
+    <script src="logic/ui.js"></script>
+  </body>
+</html>

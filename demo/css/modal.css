@@ -1,0 +1,122 @@
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.modal-overlay.show {
+  display: flex;
+  opacity: 1;
+}
+.modal {
+  background: var(--sf);
+  border: 1px solid var(--bd);
+  border-radius: 18px;
+  width: 90%;
+  max-width: 560px;
+  max-height: 80vh;
+  overflow: hidden;
+  transform: translateY(20px);
+  transition: transform 0.3s;
+}
+.modal-overlay.show .modal {
+  transform: translateY(0);
+}
+.modal-head {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--bd);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-head h3 {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--bd);
+  background: var(--sf2);
+  color: var(--dm);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.modal-close:hover {
+  border-color: var(--rd);
+  color: var(--rd);
+}
+.modal-body {
+  padding: 16px 24px 24px;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+.modal-subtitle {
+  font-size: 0.82rem;
+  color: var(--dm);
+  margin-bottom: 16px;
+}
+.mol-opt {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  background: var(--sf2);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.mol-opt:hover {
+  border-color: var(--ac);
+  background: rgba(110, 231, 183, 0.04);
+  transform: translateX(4px);
+}
+.mol-opt.active {
+  border-color: var(--ac);
+  background: rgba(110, 231, 183, 0.06);
+}
+.mol-opt .mo-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--sf);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
+}
+.mol-opt .mo-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin-bottom: 2px;
+}
+.mol-opt .mo-smi {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  color: var(--dm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 320px;
+}
+.mol-opt .mo-mw {
+  font-size: 0.72rem;
+  color: var(--dm);
+  margin-top: 2px;
+}

@@ -1,0 +1,15 @@
+@media (max-width: 960px) {
+  .idea {
+    grid-template-columns: 1fr;
+  }
+  .pl {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .pa {
+    display: none;
+  }
+  .df {
+    grid-template-columns: 1fr;
+  }
+}

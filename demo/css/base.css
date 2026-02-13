@@ -1,0 +1,42 @@
+:root {
+  --bg: #0c0e12;
+  --sf: #14171e;
+  --sf2: #1a1e28;
+  --bd: #252a36;
+  --tx: #e2e4e9;
+  --dm: #8a8f9e;
+  --ac: #6ee7b7;
+  --a2: #34d399;
+  --bl: #60a5fa;
+  --pu: #a78bfa;
+  --or: #fbbf24;
+  --rd: #f87171;
+  --cy: #22d3ee;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: "DM Sans", sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.ctr {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
